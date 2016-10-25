@@ -4,8 +4,8 @@ def read_data(file_path):
     import numpy as np
 
     # reading the excel file
-    wb = open_workbook('D:/Clouds/OneDrive/University/Lab/quantom_cognition/phyton/test_data.xlsx')
-    # wb = open_workbook(file_path)
+    # wb = open_workbook('D:/Clouds/OneDrive/University/Lab/quantom_cognition/phyton/test_data.xlsx')
+    wb = open_workbook(file_path)
 
     for sheet in wb.sheets():
         # number_of_rows = sheet.nrows

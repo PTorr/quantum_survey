@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/quantom_survey.iml" filepath="$PROJECT_DIR$/.idea/quantom_survey.iml" />
+      <module fileurl="file://D:/Users/Torr/PycharmProjects/quantum_survey/.idea/quantom_survey.iml" filepath="D:/Users/Torr/PycharmProjects/quantum_survey/.idea/quantom_survey.iml" />
     </modules>
   </component>
 </project>

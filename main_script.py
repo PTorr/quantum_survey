@@ -2,9 +2,17 @@ from read_data import read_data
 from constrained_optimization import main as co
 from entanglement_check import entanglement_checker as ec
 import numpy as np
+import os
 
 def main():
-    data = read_data('D:/Clouds/OneDrive/University/Lab/quantom_cognition/phyton/test_data.xlsx')
+    table_path = 'D:/Clouds/OneDrive/University/Lab/quantom_cognition/phyton/test_data.xlsx'
+    if os.path.exists(table_path)!=True:
+        table_path = raw_input("The path is wrong \nEnter the full path of the data file: ")
+        if os.path.exists(table_path) != True:
+            print ('File not found')
+            quit()
+
+    data = read_data(table_path)
     # Compute the coefficients
     coeff_a = coefficients_calculator(data)
     # Checking if the qbits are entangled
@@ -20,7 +28,7 @@ def coefficients_calculator(data):
     # compute the coefficients
     [nr, nc] = data.shape  # number of rows and columns in the array
     #          columns #            rows #
-    ca = [[0 for x in range(6+1)] for y in range(nr)]
+    ca = [[0 for x in range(nc+1)] for y in range(nr)]
     for i in range(nr):
         ca[i][0] = data[i,0] # qbit_01
         ca[i][1] = data[i,1] # qbit_02
