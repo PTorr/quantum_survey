@@ -40,12 +40,20 @@ def main():
     y = np.matrix(coeff_a1[:, 7])
     xx = np.real(x)
     yy = np.real(y)
-    y1 = yy[yy > 0]
-    x1 = xx[yy > 0]
-    y1 = y1[x1 < 0]
-    x1 = x1[x1 < 0]
+    yy1 = yy[yy > 0]
+    xx1 = xx[yy > 0]
+    y1 = yy1[xx1 <= 0]
+    x1 = xx1[xx1 <= 0]
+    y2 = yy1[xx1 > 0]
+    x2 = xx1[xx1 > 0]
+    yy2 = yy[yy <= 0]
+    xx2 = xx[yy <= 0]
+    y3 = yy2[xx2 <= 0]
+    x3 = xx2[xx2 <= 0]
+    y4 = yy2[xx2 > 0]
+    x4 = xx2[xx2 > 0]
     # plt.subplot(2,1,1)
-    plt.plot(xx,yy,'bo',x1,y1,'ro')
+    plt.plot(xx,yy,'bo',x1,y1,'ro',x2,y2,'go',x3,y3,'mo',x4,y4,'yo')
     plt.xlabel('Entanglement')
     plt.ylabel('Irrationality')
     # plt.subplot(2, 1, 2)
