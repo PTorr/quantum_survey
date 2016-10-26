@@ -22,6 +22,8 @@ def entanglement_checker(psi): # qc = qbits_coefficients
     # print R
 
     # Finding the eigenvalues of R
+    R[np.isnan(R)] = 0
+    # np.nan_to_num(R)
     ev = np.linalg.eigvals(R)
 
     # Check for entanglement
@@ -32,6 +34,6 @@ def entanglement_checker(psi): # qc = qbits_coefficients
     else:
         entangled = 0
 
-    return ev, c, entangled
+    return evc, c, entangled
 
 

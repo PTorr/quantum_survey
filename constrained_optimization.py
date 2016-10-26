@@ -13,14 +13,14 @@ from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 
 # This is for changing the coefficients value to the input.
-ca = [] # coefficients probabilities
-dc = [] # conjunction/disjunction/...
-def inp_value(cav,dcv):
-    global ca,dc
-    ca = cav
-    dc = dcv
+cp = [] # coefficients probabilities
+fallacy = [] # conjunction/disjunction/...
+def inp_value(cpv,fallacyv):
+    global cp,fallacy
+    cp = cpv
+    fallacy = fallacyv
 
-def main(cav,dcv):
+def main(cpv,fallacyv):
     # this is the main function that minimizes
     # its takes:
     #       func1 is the name of a function that returns a single number (f(x))
@@ -29,12 +29,12 @@ def main(cav,dcv):
     #       constraints=cons3() is the function that returns a dictionary (see below)
     #       method='SLSQP' the optimizaiton method (don't change)
     #       options={} don't change
-    inp_value(cav,dcv)
+    inp_value(cpv,fallacyv)
 
-    if dc == 1: # conjunction
+    if fallacy == 1: # conjunction
         res = minimize(func1, init1(),  # jac=func1_deriv,
                        constraints=cons1(), method='SLSQP', options={'disp': True})
-    elif dc == 2: # disjunction
+    elif fallacy == 2: # disjunction
         res = minimize(func2, init1(),  # jac=func1_deriv,
                        constraints=cons1(), method='SLSQP', options={'disp': True})
 
@@ -56,10 +56,10 @@ def init1():
 # f(x) - the function to minimize-
 # receives a vector x
 def func1(x):
-    # ca is coefficients array
-    b = [np.sqrt(1-ca[0]), np.sqrt(ca[0])]
-    c = [np.sqrt(1-ca[1]), np.sqrt(ca[1])]
-    d = [np.sqrt(1-ca[2]), np.sqrt(ca[2])]
+    # cp is coefficients probability array
+    b = [np.sqrt(1-cp[0]), np.sqrt(cp[0])]
+    c = [np.sqrt(1-cp[1]), np.sqrt(cp[1])]
+    d = [np.sqrt(1-cp[2]), np.sqrt(cp[2])]
 
     # np.sum(np.multiply(np.abs(x), np.abs(x)))
     return np.power(np.sum(np.multiply(np.abs(x), np.abs(x))) - 1,2)\
@@ -68,10 +68,10 @@ def func1(x):
     +np.power(np.abs((x[0]+x[1]+x[2])*d[0])*np.abs((x[0]+x[1]+x[2])*d[0])+ np.abs(x[3]*d[1])*np.abs(x[3]*d[1])-1,2)
 
 def func2(x):
-    # ca is coefficients array
-    b = [np.sqrt(1-ca[0]), np.sqrt(ca[0])]
-    c = [np.sqrt(1-ca[1]), np.sqrt(ca[1])]
-    d = [np.sqrt(1-ca[2]), np.sqrt(ca[2])]
+    # cp is coefficients array
+    b = [np.sqrt(1-cp[0]), np.sqrt(cp[0])]
+    c = [np.sqrt(1-cp[1]), np.sqrt(cp[1])]
+    d = [np.sqrt(1-cp[2]), np.sqrt(cp[2])]
 
     # np.sum(np.multiply(np.abs(x), np.abs(x)))
     return np.power(np.sum(np.multiply(np.abs(x), np.abs(x))) - 1,2)\
