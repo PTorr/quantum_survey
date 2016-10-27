@@ -5,57 +5,65 @@ from generate_data import data_generator as dg
 import numpy as np
 import os
 import matplotlib.pyplot as plt
-# import plotly as
-
-import itertools
-
 
 def main():
-    # Calculating 2 qbits coefficients
-    # [qbit1, qbit2, a00, a01, a10, a11, irr, irr_value, entangled, evc]       - evc = from the concurrence.
-    table_path = 'D:\Users\Torr\PycharmProjects\quantum_survey/test_data.xlsx'
+    # This is the main function which:
+    #   1) Reads the probabilities from the survey.
+    #   2) Calculate 2 qbits coefficients and check for irrationality.
+    #   3) Checking if they are entangled.
+    #   4) Plots irrationality vs. entanglement.
+    #   5) Tracing out single qbit coefficients.
+
+    # ------------------------------------------------------------------------------------------------------------
+    # Load/create the data
+    table_path = 'D:\Users\Torr\PycharmProjects\quantum_survey/test_data.csv'
     if os.path.exists(table_path) != True:
         table_path = raw_input("The path is wrong \nEnter the full path of the data file: ")
         if os.path.exists(table_path) != True:
             print ('File not found')
             quit()
 
-    data = read_data(table_path)
-    # data = dg(100)
+    # data = read_data(table_path)
+    data = dg(100)
+
+    # ------------------------------------------------------------------------------------------------------------
     # Compute the coefficients
     coeff_a = coefficients_calculator(data)
     # print np.isnan(coeff_a).any()
-    # print np.matrix(coeff_a)
 
+    # ------------------------------------------------------------------------------------------------------------
     # Checking if the qbits are entangled
     ca_nc = len(coeff_a[0])
     for i in range(len(coeff_a)):
         [evc, c, entangled] = ec(coeff_a[i][2:6])
         coeff_a[i][ca_nc:ca_nc + 2] = [entangled, evc]
-
-    # Saving the coefficients array to a csv file
+    # Saving the coefficients of 2qbits array to a csv file
+    # [qbit1, qbit2, a00, a01, a10, a11, irr, irr_value, entangled, evc]       - evc = from the concurrence.
     np.savetxt("two_qbits_coefficients_summary.csv", coeff_a, delimiter=",")
-    # \alpha
+
+    # ------------------------------------------------------------------------------------------------------------
+    # Plots irrationality vs entanglement
     coeff_a1 = np.matrix(coeff_a)
     irrationality_values = np.matrix(coeff_a1[:, 9])
     entanglement_values = np.matrix(coeff_a1[:, 7])
     # irr_ent_plt(irrationality_values,entanglement_values)
 
+    # ------------------------------------------------------------------------------------------------------------
     # Tracing out single qubit coefficients
     coeff_a2 = np.array(coeff_a1)
     available_qbits = np.unique(coeff_a2[:,0:2])
     m = 0
-    # qa = [qbit, a0, a1]
     qa = np.zeros([len(available_qbits),3])
     for q in available_qbits:
         qa[m,0:3] = [q,trace_out(q, 0, coeff_a),trace_out(q, 1, coeff_a)]
         m += 1
+    # Saving the coefficients of a single qbit to a csv file
+    # qa = [qbit, a0, a1]
     np.savetxt("single_qbit_cofficients.csv", qa, delimiter=",")
 
 
-
 def coefficients_calculator(data):
-    # compute the coefficients
+    # computes the coefficients
     [nr, nc] = data.shape  # number of rows and columns in the array
     #          columns #            rows #
     ca = [[0 for x in range(nc + 1)] for y in range(nr)]
@@ -74,8 +82,9 @@ def coefficients_calculator(data):
     return ca
 
 def trace_out(qbit,state,coeff_a):
-    # qbit - wanted qubit
-    # state - 0/1
+    #  calculates coefficient of single qbit according to:
+    #   qbit - wanted qubit
+    #   state - 0/1
     ca = np.matrix(coeff_a)
     qbit_idx = [ca[:,0] == qbit] # if the bit is the 1st bit
     qbit_idx1 = [ca[:, 1] == qbit] # if the bit is the 2nd bit
@@ -106,6 +115,8 @@ def trace_out(qbit,state,coeff_a):
     return qbit_state
 
 def irrationality_checker(pb):  # pb - probabilities from the survey [p(qbit1),p(qbit2),p(qbit1&qbit2),type of fallacy]
+    # Checks if the probabilities are irrational.
+    # Then calculate how much is the value is irrational by subtracting probabilities
     if pb[3] == 1:  # conjunction
         if (pb[2] > pb[0]) and pb[2] > pb[1]:
             irr = 1
