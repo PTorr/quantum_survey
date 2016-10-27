@@ -5,24 +5,27 @@ from generate_data import data_generator as dg
 import numpy as np
 import os
 import matplotlib.pyplot as plt
+# import plotly as
+
 import itertools
 
 
 def main():
     # Calculating 2 qbits coefficients
     # [qbit1, qbit2, a00, a01, a10, a11, irr, irr_value, entangled, evc]       - evc = from the concurrence.
-    table_path = 'D:/Clouds/OneDrive/University/Lab/quantom_cognition/phyton/test_data.xlsx'
+    table_path = 'D:\Users\Torr\PycharmProjects\quantum_survey/test_data.xlsx'
     if os.path.exists(table_path) != True:
         table_path = raw_input("The path is wrong \nEnter the full path of the data file: ")
         if os.path.exists(table_path) != True:
             print ('File not found')
             quit()
 
-    # data = read_data(table_path)
-    data = dg(10)
+    data = read_data(table_path)
+    # data = dg(100)
     # Compute the coefficients
     coeff_a = coefficients_calculator(data)
     # print np.isnan(coeff_a).any()
+    # print np.matrix(coeff_a)
 
     # Checking if the qbits are entangled
     ca_nc = len(coeff_a[0])
@@ -30,49 +33,20 @@ def main():
         [evc, c, entangled] = ec(coeff_a[i][2:6])
         coeff_a[i][ca_nc:ca_nc + 2] = [entangled, evc]
 
-    # print np.matrix(coeff_a)
     # Saving the coefficients array to a csv file
-    np.savetxt("2qbits_coefficients_summary.csv", coeff_a, delimiter=",")
+    np.savetxt("qbits_coefficients_summary.csv", coeff_a, delimiter=",")
 
-    # This section plots the irrationality (irr_value) as function of the entanglement (evc)
     coeff_a1 = np.matrix(coeff_a)
-    x = np.matrix(coeff_a1[:, 9])
-    y = np.matrix(coeff_a1[:, 7])
-    xx = np.real(x)
-    yy = np.real(y)
-    yy1 = yy[yy > 0]
-    xx1 = xx[yy > 0]
-    y1 = yy1[xx1 <= 0]
-    x1 = xx1[xx1 <= 0]
-    y2 = yy1[xx1 > 0]
-    x2 = xx1[xx1 > 0]
-    yy2 = yy[yy <= 0]
-    xx2 = xx[yy <= 0]
-    y3 = yy2[xx2 <= 0]
-    x3 = xx2[xx2 <= 0]
-    y4 = yy2[xx2 > 0]
-    x4 = xx2[xx2 > 0]
-    # plt.subplot(2,1,1)
-    plt.plot(xx,yy,'bo',x1,y1,'ro',x2,y2,'go',x3,y3,'mo',x4,y4,'yo')
-    plt.xlabel('Entanglement')
-    plt.ylabel('Irrationality')
-    # plt.subplot(2, 1, 2)
-    # plt.scatter(x1,y1)
-    # plt.xlabel('Entanglement')
-    # plt.ylabel('Irrationality')
-    plt.show()
+    irrationality_values = np.matrix(coeff_a1[:, 9])
+    entanglement_values = np.matrix(coeff_a1[:, 7])
+    irr_ent_plt(irrationality_values,entanglement_values)
 
-
-    # fig, ax = plt.subplots()
-    # ys = np.real(y)
-    # threshold = 0
-    # ax.plot(np.real(x),ys, linestyle='none', color='b', marker='o',)
-
-    # greater_than_threshold = [i for i, val in enumerate(ys) if val > threshold]
-    # ax.plot(greater_than_threshold, ys[greater_than_threshold],
-    #         linestyle='none', color='r', marker='o')
-
-    # plt.show()
+    # Tracing out single qubit coefficients
+    q1a0 = trace_out(1, 0, coeff_a)
+    q1a1 = trace_out(1, 1, coeff_a)
+    q2a0 = trace_out(2, 0, np.real(coeff_a))
+    q2a1 = trace_out(2, 1, coeff_a)
+    print q1a0,'\n',q1a1,'\n',q2a0,'\n', q2a1
 
 
 def coefficients_calculator(data):
@@ -93,6 +67,38 @@ def coefficients_calculator(data):
         ca[i][nc:nc + 2] = [irr, irr_value]
     # ca = np.matrix(ca)
     return ca
+
+def trace_out(qbit,state,coeff_a):
+    # qbit - wanted qubit
+    # state - 0/1
+    ca = np.matrix(coeff_a)
+    qbit_idx = [ca[:,0] == qbit] # if the bit is the 1st bit
+    qbit_idx1 = [ca[:, 1] == qbit] # if the bit is the 2nd bit
+
+    a00 = ca[:, 2]
+    a01 = ca[:, 3]
+    a10 = ca[:, 4]
+    a11 = ca[:, 5]
+
+    ca1 = a00[qbit_idx].T
+    ca2 = a01[qbit_idx].T
+    ca3 = a10[qbit_idx].T
+    ca4 = a11[qbit_idx].T
+
+    ca11 = a00[qbit_idx1].T
+    ca22 = a01[qbit_idx1].T
+    ca33 = a10[qbit_idx1].T
+    ca44 = a11[qbit_idx1].T
+
+    if state == 0:
+        qbit_state = sum(np.power(ca1, 2)) + sum(np.power(ca2, 2))
+        qbit_state += sum(np.power(ca11, 2)) + sum(np.power(ca33, 2))
+    if state == 1:
+        qbit_state = sum(np.power(ca3,2)) + sum(np.power(ca4,2))
+        qbit_state += sum(np.power(ca22, 2)) + sum(np.power(ca44, 2))
+    qbit_state = np.sqrt(qbit_state)
+    return qbit_state
+
 
 
 def irrationality_checker(pb):  # pb - probabilities from the survey [p(qbit1),p(qbit2),p(qbit1&qbit2),type of fallacy]
@@ -124,6 +130,40 @@ def irrationality_checker(pb):  # pb - probabilities from the survey [p(qbit1),p
             irr_value = (pb[2] - pb[0] + pb[2] - pb[1]) / 2
     return irr, irr_value
 
+
+def irr_ent_plt(x,y):
+    # Plots the irrationality (irr_value) as function of the entanglement (evc)
+    xx = np.real(x)
+    yy = np.real(y)
+    yy1 = yy[yy > 0]
+    xx1 = xx[yy > 0]
+    y1 = yy1[xx1 <= 0]
+    x1 = xx1[xx1 <= 0]
+    y2 = yy1[xx1 > 0]
+    x2 = xx1[xx1 > 0]
+    yy2 = yy[yy <= 0]
+    xx2 = xx[yy <= 0]
+    y3 = yy2[xx2 <= 0]
+    x3 = xx2[xx2 <= 0]
+    y4 = yy2[xx2 > 0]
+    x4 = xx2[xx2 > 0]
+
+    plt.plot(np.asarray(x1.T), np.asarray(y1.T), 'b.', label = 'rational & not entangled')
+    plt.plot(np.asarray(x2.T), np.asarray(y2.T), 'g*', label = 'rational & entangled')
+    plt.plot(np.asarray(x3.T), np.asarray(y3.T), 'mx', label = 'irrational & not entangled')
+    plt.plot(np.asarray(x4.T), np.asarray(y4.T), 'r+', label = 'irrational & entangled')
+
+    # p1, =
+    # p2, =
+    # p3, =
+    # p4, =
+    # plt.legend([p1,p2,p3,p4],['rational & not entangled','rational & entangled','irrational & not entangled','irrational & entangled'])
+    # plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+    plt.legend()
+    plt.xlabel('Entanglement')
+    plt.ylabel('Irrationality')
+    plt.savefig('irr_ent.png')
+    plt.show()
 
 if __name__ == '__main__':
     main()

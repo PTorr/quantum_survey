@@ -33,10 +33,10 @@ def main(cpv,fallacyv):
 
     if fallacy == 1: # conjunction
         res = minimize(func1, init1(),  # jac=func1_deriv,
-                       constraints=cons1(), method='SLSQP', options={'disp': True})
+                       constraints=cons1(), method='SLSQP', options={'disp': False})
     elif fallacy == 2: # disjunction
         res = minimize(func2, init1(),  # jac=func1_deriv,
-                       constraints=cons1(), method='SLSQP', options={'disp': True})
+                       constraints=cons1(), method='SLSQP', options={'disp': False})
 
     # res has the following fields:
     # print(res.x) # the x at the solution
