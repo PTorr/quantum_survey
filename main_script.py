@@ -34,19 +34,24 @@ def main():
         coeff_a[i][ca_nc:ca_nc + 2] = [entangled, evc]
 
     # Saving the coefficients array to a csv file
-    np.savetxt("qbits_coefficients_summary.csv", coeff_a, delimiter=",")
-
+    np.savetxt("two_qbits_coefficients_summary.csv", coeff_a, delimiter=",")
+    # \alpha
     coeff_a1 = np.matrix(coeff_a)
     irrationality_values = np.matrix(coeff_a1[:, 9])
     entanglement_values = np.matrix(coeff_a1[:, 7])
-    irr_ent_plt(irrationality_values,entanglement_values)
+    # irr_ent_plt(irrationality_values,entanglement_values)
 
     # Tracing out single qubit coefficients
-    q1a0 = trace_out(1, 0, coeff_a)
-    q1a1 = trace_out(1, 1, coeff_a)
-    q2a0 = trace_out(2, 0, np.real(coeff_a))
-    q2a1 = trace_out(2, 1, coeff_a)
-    print q1a0,'\n',q1a1,'\n',q2a0,'\n', q2a1
+    coeff_a2 = np.array(coeff_a1)
+    available_qbits = np.unique(coeff_a2[:,0:2])
+    m = 0
+    # qa = [qbit, a0, a1]
+    qa = np.zeros([len(available_qbits),3])
+    for q in available_qbits:
+        qa[m,0:3] = [q,trace_out(q, 0, coeff_a),trace_out(q, 1, coeff_a)]
+        m += 1
+    np.savetxt("single_qbit_cofficients.csv", qa, delimiter=",")
+
 
 
 def coefficients_calculator(data):
@@ -97,9 +102,8 @@ def trace_out(qbit,state,coeff_a):
         qbit_state = sum(np.power(ca3,2)) + sum(np.power(ca4,2))
         qbit_state += sum(np.power(ca22, 2)) + sum(np.power(ca44, 2))
     qbit_state = np.sqrt(qbit_state)
+    qbit_state = qbit_state[0,0]
     return qbit_state
-
-
 
 def irrationality_checker(pb):  # pb - probabilities from the survey [p(qbit1),p(qbit2),p(qbit1&qbit2),type of fallacy]
     if pb[3] == 1:  # conjunction
@@ -129,7 +133,6 @@ def irrationality_checker(pb):  # pb - probabilities from the survey [p(qbit1),p
             irr = 0
             irr_value = (pb[2] - pb[0] + pb[2] - pb[1]) / 2
     return irr, irr_value
-
 
 def irr_ent_plt(x,y):
     # Plots the irrationality (irr_value) as function of the entanglement (evc)
