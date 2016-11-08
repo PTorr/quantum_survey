@@ -17,7 +17,7 @@ def main():
     # ------------------------------------------------------------------------------------------------------------
     # Load/create the data
     # table_path = 'D:\Users\Torr\PycharmProjects\quantum_survey/test_data.csv'
-    table_path = '/home/torr/PycharmProjects/quantum_survey1/test_data.csv'
+    table_path = '/home/torr/PycharmProjects/quantum_survey/test_data.csv'
     if os.path.exists(table_path) != True:
         table_path = raw_input("The path is wrong \nEnter the full path of the data file: ")
         if os.path.exists(table_path) != True:
