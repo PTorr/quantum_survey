@@ -1,0 +1,101 @@
+startDate,Start Date,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48
+endDate,End Date,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48
+status,Response Type,2,2,2,2,2
+ipAddress,IP Address,,,,,
+progress,Progress,100,100,100,100,100
+duration,Duration (in seconds),1,0,1,0,1
+finished,Finished,1,1,1,1,1
+recordedDate,Recorded Date,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48,03/11/2016 07:48
+_recordId,Response ID,R_3Kvb9sXItcA5Ssd,R_dmtIHdZLutsuUXH,R_1TgZodDvgJtdsjP,R_3gbqShFtXJrIjGt,R_6KUUVJguZwhg0bb
+recipientLastName,Recipient Last Name,,,,,
+recipientFirstName,Recipient First Name,,,,,
+recipientEmail,Recipient Email,,,,,
+externalDataReference,External Reference,,,,,
+locationLatitude,LocationLatitude - Location Latitude,32.06669617,32.06669617,32.06669617,32.06669617,32.06669617
+locationLongitude,LocationLongitude - Location Longitude,34.76669312,34.76669312,34.76669312,34.76669312,34.76669312
+distributionChannel,DistributionChannel - Distribution Channel,test,test,test,test,test
+QID23_7,Q2.1_7 - If she lives in San Francisco. What is the probability that Emma works as a...,20,50,71,45,68
+QID23_8,Q2.1_8 - If she doesn't live in San Francisco. What is the probability that Emma wor...,47,7,92,74,75
+QID23_9,Q2.1_9 - If you don't know where she lives. What is the probability that Emma works...,13,56,21,23,78
+QID28_FIRST_CLICK,Q2.2_First Click - First Click,7.24,8.31,6.27,1.74,4.29
+QID28_LAST_CLICK,Q2.2_Last Click - Last Click,9.16,9.77,9.87,1.91,6.04
+QID28_PAGE_SUBMIT,Q2.2_Page Submit - Page Submit,8.12,9.35,6.32,4.39,8.8
+QID28_CLICK_COUNT,Q2.2_Click Count - Click Count,43,34,2,3,0
+QID24_11,Q3.1_11 - Emma is a manger,53,28,66,63,76
+QID24_12,Q3.1_12 - Emma is a pianist and a runner,18,87,95,59,89
+QID24_13,Q3.1_13 - Emma is a writer,48,4,77,76,99
+QID24_14,Q3.1_14 - Emma likes to paint,57,63,21,55,50
+QID24_15,Q3.1_15 - Emma is vegan,98,10,74,69,5
+QID24_16,Q3.1_16 - Emma likes to exercise,41,4,36,62,5
+QID24_17,Q3.1_17 - Emma is a manger and likes to exercise,91,36,40,87,34
+QID24_18,Q3.1_18 - Emma is a blogger,23,9,5,83,18
+QID30_FIRST_CLICK,Q3.2_First Click - First Click,2.64,9.71,1.78,5.6,5.89
+QID30_LAST_CLICK,Q3.2_Last Click - Last Click,7.83,9.92,6.43,8.25,8.68
+QID30_PAGE_SUBMIT,Q3.2_Page Submit - Page Submit,7.9,9.96,5.15,6.46,6.82
+QID30_CLICK_COUNT,Q3.2_Click Count - Click Count,41,24,0,23,21
+QID25_4,Q4.1_4 - Is Liz a programmer?,70,67,83,95,100
+QID25_5,Q4.1_5 - Does Liz like paint?,7,32,98,31,13
+QID25_6,Q4.1_6 - Is Liz a programmer and likes paint?,46,22,15,1,23
+QID26_FIRST_CLICK,Q4.2_First Click - First Click,9.48,5.23,3.54,1.31,7.36
+QID26_LAST_CLICK,Q4.2_Last Click - Last Click,9.65,6.51,5.32,2.19,9.79
+QID26_PAGE_SUBMIT,Q4.2_Page Submit - Page Submit,9.5,8.05,3.96,5.89,8.61
+QID26_CLICK_COUNT,Q4.2_Click Count - Click Count,28,14,41,30,21
+QID31_4,Q5.2_4 - Liz enjoys the outdoors,100,48,38,65,6
+QID31_5,Q5.2_5 - Liz likes to paint,32,37,55,7,55
+QID31_6,Q5.2_6 - Liz is a programmer,8,66,68,19,17
+QID31_7,Q5.2_7 - Liz likes the cinema and to exercise,45,67,26,62,39
+QID31_8,Q5.2_8 - Liz likes bungee jumping,8,52,0,76,34
+QID31_9,Q5.2_9 - Liz plays in a band,8,35,7,64,63
+QID31_10,Q5.2_10 - Liz is a programmer and likes to paint,64,47,27,99,97
+QID31_11,Q5.2_11 - Liz like to exercise,27,41,19,91,91
+QID32,"Q6.1 - Emma has another friend the lives close to her, Anna. Anna likes to go fish...",8,8,9,8,7
+QID36_FIRST_CLICK,Q6.2_First Click - First Click,7.72,8.72,1.71,4.42,2.99
+QID36_LAST_CLICK,Q6.2_Last Click - Last Click,8.85,9.06,5.71,7.63,7.47
+QID36_PAGE_SUBMIT,Q6.2_Page Submit - Page Submit,8.61,9.7,8.73,4.79,6.4
+QID36_CLICK_COUNT,Q6.2_Click Count - Click Count,29,9,48,0,0
+QID33_4,Q7.1_4 - They met when Emma bought a painting from Liz for her manager office,9,10,6,4,3
+QID33_5,Q7.1_5 - They were neighbors when Emma wasn't living in the city,5,9,0,8,2
+QID33_6,Q7.1_6 - They met during yoga class in the park near Liz's house,9,4,3,5,4
+QID33_7,Q7.1_7 - They met when Emma hired Liz as a programmer to the start-up,9,2,3,8,8
+QID33_8,Q7.1_8 - The studied together in collage,10,10,1,9,7
+QID33_9,Q7.1_9 - They used to work together in Emma's old job,0,9,5,4,6
+QID33_10,Q7.1_10 - They met during a backpacking trip in Europe,5,2,0,8,6
+QID35_FIRST_CLICK,Q7.2_First Click - First Click,5.57,6.13,5.78,6.71,8.66
+QID35_LAST_CLICK,Q7.2_Last Click - Last Click,6.19,7.17,8.41,9.41,8.9
+QID35_PAGE_SUBMIT,Q7.2_Page Submit - Page Submit,9.34,9.55,7.77,7.54,9.88
+QID35_CLICK_COUNT,Q7.2_Click Count - Click Count,6,34,5,26,9
+QID34_4,"Q8.1_4 - Take spinning class, because Emma likes to exercise",19,10,18,96,6
+QID34_5,Q8.1_5 - Try out gourmet restaurants in the city,13,8,65,47,53
+QID34_6,"Q8.1_6 - Take realistic painting classes, because Liz like to paint",31,5,28,72,16
+QID34_7,Q8.1_7 - Take singing classes near Emma's apartment,13,37,86,38,72
+QID34_8,Q8.1_8 - Take photography class near Liz house,77,28,26,18,63
+QID34_9,Q8.1_9 - Take spinning class or realistic painting classes,41,41,60,54,67
+QID38_FIRST_CLICK,Q8.2_First Click - First Click,9.29,2.63,5.94,2.09,5.08
+QID38_LAST_CLICK,Q8.2_Last Click - Last Click,9.54,9.73,7.26,3.79,7.88
+QID38_PAGE_SUBMIT,Q8.2_Page Submit - Page Submit,9.7,4.01,6.86,9.59,5.27
+QID38_CLICK_COUNT,Q8.2_Click Count - Click Count,31,44,11,24,44
+QID39_4,Q9.1_4 - Programming teaching App because of Liz's programming skills,6,0,4,0,0
+QID39_5,Q9.1_5 - A bakery because they want to do something new,1,0,3,6,4
+QID39_6,Q9.1_6 - A gym because Emma likes to exercise,6,8,1,6,1
+QID39_7,"Q9.1_7 - Apartment searching App, because both had hard time finding an apartment",8,1,10,6,7
+QID39_8,Q9.1_8 - Fitness App because it combines Liz's programming skills and Emma liking to...,2,2,2,0,7
+QID39_9,Q9.1_9 - Cooking App for hard working people,0,9,8,9,1
+QID40_FIRST_CLICK,Q9.2_First Click - First Click,9.47,8.36,0.08,4.61,1.42
+QID40_LAST_CLICK,Q9.2_Last Click - Last Click,9.79,9.66,7.26,8.6,9.29
+QID40_PAGE_SUBMIT,Q9.2_Page Submit - Page Submit,9.68,9.23,8.49,4.93,6.69
+QID40_CLICK_COUNT,Q9.2_Click Count - Click Count,34,34,23,21,25
+QID41_4,"Q10.1_4 - For her work, as manager",29,38,24,96,8
+QID41_5,Q10.1_5 - Volunteer,48,76,88,2,42
+QID41_6,Q10.1_6 - Exercise,88,60,11,89,33
+QID41_7,"Q10.1_7 - Join Book club, because she likes to read",77,26,25,74,33
+QID41_8,Q10.1_8 - To work as manager or to exercise,30,82,72,51,32
+QID41_9,Q10.1_9 - Meet with friends,89,85,6,80,14
+QID42_FIRST_CLICK,Q10.2_First Click - First Click,1.17,6.12,5.42,4.7,0.1
+QID42_LAST_CLICK,Q10.2_Last Click - Last Click,9.57,6.7,5.53,6.75,1.25
+QID42_PAGE_SUBMIT,Q10.2_Page Submit - Page Submit,9.36,8.01,8.91,7.69,6.56
+QID42_CLICK_COUNT,Q10.2_Click Count - Click Count,20,28,19,15,46
+QID46,Q11.1 - Do you think that Emma is not a manager and Liz is a programmer?,23,24,23,24,24
+QID47,Q11.2 - Do you think that Liz is a programmer but not a painter?,23,23,24,23,23
+QID48,Q11.3 - Do you think that Emma exercise but isn't a manager?,24,24,23,23,23
+QID49,"Q12.1 - Suppose that Emma Lives in San Francisco, do Emma and Liz live in the same...",8,4,9,8,4
+survey_code,survey_code,81047586,81001675,39123697,15226565,97168745

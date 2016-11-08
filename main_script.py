@@ -23,8 +23,8 @@ def main():
             print ('File not found')
             quit()
 
-    # data = read_data(table_path)
-    data = dg(100)
+    data = read_data(table_path)
+    # data = dg(10)
 
     # ------------------------------------------------------------------------------------------------------------
     # Compute the coefficients
@@ -38,15 +38,15 @@ def main():
         [evc, c, entangled] = ec(coeff_a[i][2:6])
         coeff_a[i][ca_nc:ca_nc + 2] = [entangled, evc]
     # Saving the coefficients of 2qbits array to a csv file
-    # [qbit1, qbit2, a00, a01, a10, a11, irr, irr_value, entangled, evc]       - evc = from the concurrence.
-    np.savetxt("two_qbits_coefficients_summary.csv", coeff_a, delimiter=",")
+    np.savetxt("two_qbits_coefficients_summary.csv", coeff_a, delimiter=",",
+               header='qbit1, qbit2, a00, a01, a10, a11, irr, irr_value, entangled, evc')
 
     # ------------------------------------------------------------------------------------------------------------
     # Plots irrationality vs entanglement
     coeff_a1 = np.matrix(coeff_a)
     irrationality_values = np.matrix(coeff_a1[:, 9])
     entanglement_values = np.matrix(coeff_a1[:, 7])
-    # irr_ent_plt(irrationality_values,entanglement_values)
+    irr_ent_plt(irrationality_values,entanglement_values)
 
     # ------------------------------------------------------------------------------------------------------------
     # Tracing out single qubit coefficients
@@ -58,8 +58,8 @@ def main():
         qa[m,0:3] = [q,trace_out(q, 0, coeff_a),trace_out(q, 1, coeff_a)]
         m += 1
     # Saving the coefficients of a single qbit to a csv file
-    # qa = [qbit, a0, a1]
-    np.savetxt("single_qbit_cofficients.csv", qa, delimiter=",")
+    np.savetxt("single_qbit_cofficients.csv", qa, delimiter=",",
+               header='qbit, a0, a1')
 
 
 def coefficients_calculator(data):
@@ -178,6 +178,7 @@ def irr_ent_plt(x,y):
     plt.ylabel('Irrationality')
     plt.savefig('irr_ent.png')
     plt.show()
+
 
 if __name__ == '__main__':
     main()

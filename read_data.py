@@ -1,11 +1,11 @@
 def main():
     fpath = 'D:\Users\Torr\PycharmProjects\quantum_survey/test_data.xlsx'
     fpath1 = 'test_data.csv'
-    data = read_data(fpath)
-    print data
+    d = read_data(fpath)
+    print d
 
 
-    def read_data(file_path):
+def read_data(file_path):
     # Reads the data from csv file and transform it into an array called data.
     from xlrd import open_workbook
     import numpy as np

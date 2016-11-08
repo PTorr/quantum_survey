@@ -1,10 +1,11 @@
 import numpy as np
-from sympy.physics.matrices import msigma # pauli matrices
 
 def entanglement_checker(psi): # qc = qbits_coefficients
     # This function is checking if 2 qbits are entangled.
     # To do this it calculates the concurrence as documented in:
     # https://en.wikipedia.org/wiki/Concurrence_(quantum_computing)
+
+    from sympy.physics.matrices import msigma  # pauli matrices
 
     # Computing the density matrix
     psi = np.matrix(psi)
@@ -13,6 +14,7 @@ def entanglement_checker(psi): # qc = qbits_coefficients
     # Computing rho wave for R matrix
     pauli_k = np.kron(msigma(2),msigma(2))
     rho_wave = np.dot(np.dot(pauli_k,np.conjugate(rho)),pauli_k)
+
 
     # Computing R
     R_1 = np.dot(np.sqrt(rho),rho_wave)
