@@ -4,10 +4,10 @@ import pandas as pd
 
 
 def main():
-    table_path = 'D:\Users\Torr\PycharmProjects\quantum_survey/emma_survey_5.csv'
-    [questions_id, question_answers] = reformat_data(table_path)
-    # print np.matrix(questions_id)
-    print np.matrix(question_answers)
+    # table_path = 'D:\Users\Torr\PycharmProjects\quantum_survey/emma_survey_5.csv'
+    table_path = '/home/torr/PycharmProjects/quantum_survey1/emma_survey_5.csv'
+    [questions_id, question_answers, user_id] = reformat_data(table_path)
+    print question_answers
 
 
 def reformat_data(table_path):
@@ -18,14 +18,18 @@ def reformat_data(table_path):
     q_value = np.ndarray((dc - 2, dr - 17), float)
 
     qid = data[1][16:dr - 1]  # qid is the question number
+    qid = qid.tolist()
+    qid = np.asarray(qid)
+
+    d = data
+    d = np.asarray(d)
+    user_id = d[dr-1][2:dc]
+
     for i in range(len(q_value)):
         qtemp = data[i + 2][16:dr - 1]  # answers/ probabilities
         qtemp = np.asarray(qtemp)
         q_value[i, :] = qtemp
-        print i
-    qid = qid.tolist()
 
-    qid = np.asarray(qid)
 
     qid = [q.split('.') for q in qid]
     qid1 = [q[1].split('_') for q in qid]
@@ -54,14 +58,15 @@ def reformat_data(table_path):
         i += 1
 
     qid = np.delete(qid, idx_rmv)
-    for i in idx_rmv:
-        print i
-        # q_value = np.delete(q_value, i, axis=0)  # axis=0 means rows
+    q_value = q_value.T
+    # for i in idx_rmv:
+    #     print i
+    q_value = np.delete(q_value, idx_rmv, 0)  # axis=0 means rows
 
     # q_value = map(int,q_value)
 
     # ------------------------------------------------------------------------------------------------------------
-    # creates dictionary {question:indicies of values}
+    # creates dictionary {question:indices of values}
     # available_qid = np.unique(qid)
     # d = {}
     # for q in available_qid:
@@ -72,11 +77,9 @@ def reformat_data(table_path):
     # ------------------------------------------------------------------------------------------------------------
 
     qid = [q[0] for q in qid]
+    qid = np.asarray(qid)
 
-    # print qid[qid == available_qid[0]]
-    # print q_value[qid == available_qid[0]]
-
-    return qid, q_value
+    return qid, q_value, user_id
 
 
 if __name__ == '__main__':
