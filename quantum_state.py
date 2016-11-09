@@ -1,23 +1,33 @@
 import numpy as np
+from main_script import irrationality_checker as irr_check
+
 
 def main():
     d = np.sqrt(0.8)
     d1 = np.sqrt(0.2)
     ca = np.ndarray((6), float)
     qa = np.ndarray((2, 3), float)
-    # ca,qa = main(d,d1)
-    n = 100
+    # ca,qa = state_prob(d,d1)
+    # print np.matrix(ca)
+    # ca,qa = state_prob(d1,d)
+    # print np.matrix(ca)
+    n = 10
     d = np.linspace(0, 1, n)
     d1 = np.linspace(0, 1, n)
     # Filling the data array
-    coeff_irr = []
+    irr_coeff = []
     for i in range(n):
         for j in range(n):
             [ca, qa] = state_prob(d[i], d1[j])
-            if (qa[0, 2] < ca[5] or qa[1, 2] < ca[5]):
-                coeff_irr.append(qa[0, 2], qa[1, 2], ca[5])
-    np.savetxt("irrationality_coefficients.csv", coeff_irr, delimiter=",",
-               header='q1a1, q2a1, a11')
+            [irr, irr_value] = irr_check([qa[0, 2],qa[1, 2],ca[5],1])
+            if (irr==1):
+                irr_coeff.append([qa[0, 2], qa[1, 2], ca[5]])
+    if len(irr_coeff) != 0:
+        np.savetxt("irrationality_coefficients.csv", irr_coeff, delimiter=",",
+                   header='q1a1, q2a1, a11')
+    else:
+        print 'No irrationalities where found'
+
 
 def state_prob(d,d1):
     # this is the function which run the functions that calculate:
