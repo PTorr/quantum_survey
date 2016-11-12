@@ -3,6 +3,7 @@ from main_script import irrationality_checker as irr_check
 
 
 def main():
+    # help(state_prob)
     d = np.sqrt(0.8)
     d1 = np.sqrt(0.2)
     ca = np.ndarray((6), float)
@@ -30,12 +31,12 @@ def main():
 
 
 def state_prob(d,d1):
-    # this is the function which run the functions that calculate:
-    #   1) coefficients of 2 qbits state
-    #   2) probabilities of each qubit.
-    # constrains:
-    # c * c + d * d = 1
-    # c1 * c1 + d1 * d1 = 1
+    '''This is the function which run the functions that calculate:
+        1) coefficients of 2 qbits state
+        2) probabilities of each qubit.
+        constrains:
+        c * c + d * d = 1
+        c1 * c1 + d1 * d1 = 1'''
     c = np.sqrt(1 - d * d)
     c1 = np.sqrt(1 - d1 * d1)
     [a, b] = ab(c, c1, d, d1)

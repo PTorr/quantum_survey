@@ -5,7 +5,8 @@ import pandas as pd
 
 def main():
     # table_path = 'D:\Users\Torr\PycharmProjects\quantum_survey/emma_survey_5.csv'
-    table_path = '/home/torr/PycharmProjects/quantum_survey/emma_survey_5.csv'
+    # table_path = '/home/torr/PycharmProjects/quantum_survey/emma_survey_5.csv'
+    table_path = 'emma_survey_5.csv'
     [questions_id, question_answers, user_id] = reformat_data(table_path)
     # print question_answers ,
 
