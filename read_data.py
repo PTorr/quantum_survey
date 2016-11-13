@@ -6,7 +6,7 @@ def main():
 
 
 def read_data(file_path):
-    # Reads the data from csv file and transform it into an array called data.
+    '''Reads the data from csv file and transform it into an array called data.'''
     from xlrd import open_workbook
     import numpy as np
     import os

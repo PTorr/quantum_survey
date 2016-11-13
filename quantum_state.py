@@ -1,5 +1,5 @@
 import numpy as np
-from main_script import irrationality_checker as irr_check
+from constraint_analysis import irrationality_checker as irr_check
 
 
 def main():
@@ -47,7 +47,7 @@ def state_prob(d,d1):
     # print('|s> = %+.2f[%+.2f|00>%+.2f|11>]%+.2f[%+.2f|01>-(%+.2f)|10>]'% (a,c,d,b,c,d))
     # print('|s> = %+.2f|00>%+.2f|11>%+.2f|01>%+.2f|10>' % (ca[2],ca[5],ca[3],ca[4]))
 
-    from main_script import trace_out as trace_out
+    from constraint_analysis import trace_out as trace_out
     qa = np.ndarray((2,3), float)
     # qa[0, :] = ['qbit', 'a0', 'a1']
     qa[0, :] = [1, trace_out(1, 0, ca), trace_out(1, 1, ca)]
@@ -62,25 +62,25 @@ def coeffs_cd(a,b,c1,d1):
     pass
 
 def coeffs_c1d1(a,b,c,d):
-    # calculate c' & d' from c,d,a,b
+    '''calculate c' & d' from c,d,a,b'''
     c1 = a*c+b*d
     d1 = a*d-b*c
     return c1, d1
 
 def ab(c,c1,d,d1):
-    # calculate a & b from c,c1,d,d1
+    '''calculate a & b from c,c1,d,d1'''
     a = c*c1+d*d1
     b = d*c1-d1*c
     return a,b
 
 def ang(a):
-    # calculate the angle between the bits from a.
+    '''calculate the angle between the bits from a.'''
     import math
     theta = math.degrees(math.acos(a))
     return theta
 
 def coeff_a(a,b,c,d):
-    # calculate the coefficients of the 2 qbits state
+    '''calculate the coefficients of the 2 qbits state'''
     ca = np.ndarray((4), float)
     ca[0] = a * c
     ca[1] = b * c

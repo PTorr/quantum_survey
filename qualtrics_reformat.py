@@ -12,7 +12,7 @@ def main():
 
 
 def reformat_data(table_path):
-    # data = read_data(table_path)
+    '''data = read_data(table_path)'''
     data = pd.read_csv(table_path, header=None)
     dr = len(data)  # number of rows in the data
     dc = len(data.T)  # number of columns (participants) in the data
