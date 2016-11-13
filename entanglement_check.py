@@ -3,7 +3,11 @@ import numpy as np
 def entanglement_checker(psi): # qc = qbits_coefficients
     '''This function is checking if 2 qbits are entangled.
        To do this it calculates the concurrence as documented in:
-       https://en.wikipedia.org/wiki/Concurrence_(quantum_computing)'''
+       https://en.wikipedia.org/wiki/Concurrence_(quantum_computing)
+       input: psi - [a00,a01,a10,a11]
+       output: evc - eigenvalues subtraction value
+               c - return max[0,evc]
+               entangled - 1/0 is entangled'''
 
     from sympy.physics.matrices import msigma  # pauli matrices
 

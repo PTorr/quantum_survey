@@ -14,11 +14,12 @@ def main():
 
 def constraint_analysis(table_path):
     '''This is the main function which:
-          1) Reads the probabilities from the survey.
-          2) Calculate 2 qbits coefficients and check for irrationality.
-          3) Checking if they are entangled.
-          4) Plots irrationality vs. entanglement.
-          5) Tracing out single qbit coefficients.'''
+      1) Reads the probabilities from the survey.
+      2) Calculate 2 qbits coefficients and check for irrationality.
+      3) Checking if they are entangled.
+      4) Plots irrationality vs. entanglement.
+      5) Tracing out single qbit coefficients.
+      Input: table_path - the full path of the csv file from the Qualtrics.'''
 
     # ------------------------------------------------------------------------------------------------------------
     # Load/create the data
@@ -68,7 +69,9 @@ def constraint_analysis(table_path):
 
 
 def coefficients_calculator(data):
-    '''computes the coefficients'''
+    '''computes the coefficients
+        input: data - data array: [qbit1, qbit2, p(qb1=1), p(qb2=1),p(qb1=1 & qb2 = 1), fallacy type]
+        output: ca - np.ndarray [qbit1, qbit2, a00, a01, a10, a11, is_irrational, irrationality_value]'''
     [nr, nc] = data.shape  # number of rows and columns in the array
     #          columns #            rows #
     ca = [[0 for x in range(nc + 1)] for y in range(nr)]
@@ -89,7 +92,11 @@ def coefficients_calculator(data):
 def trace_out(qbit,state,coeff_a):
     '''calculates coefficient of single qbit according to:
        qbit - wanted qubit
-       state - 0/1'''
+       state - 0/1
+       input: qbit - which qbit to trace out.
+              state - state of the qbit.
+              coeff_a - array of all the coefficients of the two qbits state.
+       output: qbit_state - the coefficient of the selected qbit and its state.'''
     ca = np.matrix(coeff_a)
     qbit_idx = [ca[:,0] == qbit] # if the bit is the 1st bit
     qbit_idx1 = [ca[:, 1] == qbit] # if the bit is the 2nd bit
@@ -119,9 +126,12 @@ def trace_out(qbit,state,coeff_a):
     qbit_state = qbit_state[0,0]
     return qbit_state
 
-def irrationality_checker(pb):  # pb - probabilities from the survey [p(qbit1),p(qbit2),p(qbit1&qbit2),type of fallacy]
+def irrationality_checker(pb):
     '''Checks if the probabilities are irrational.
-       Then calculate how much is the value is irrational by subtracting probabilities'''
+       Then calculate how much is the value is irrational by subtracting probabilities
+       input: pb - probabilities from the survey [p(qbit1),p(qbit2),p(qbit1&qbit2),type of fallacy]
+       output: irr - 0/1 is irrational
+               irr_value - the value of the irrationality'''
     if pb[3] == 1:  # conjunction
         if (pb[2] > pb[0]) and pb[2] > pb[1]:
             irr = 1
@@ -151,7 +161,9 @@ def irrationality_checker(pb):  # pb - probabilities from the survey [p(qbit1),p
     return irr, irr_value
 
 def irr_ent_plt(x,y):
-    '''Plots the irrationality (irr_value) as function of the entanglement (evc)'''
+    '''Plots the irrationality (irr_value) as function of the entanglement (evc)
+        input: x - entanglement values
+               y - irrationality values'''
     xx = np.real(x)
     yy = np.real(y)
     yy1 = yy[yy > 0]

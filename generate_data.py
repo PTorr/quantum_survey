@@ -6,9 +6,9 @@ def main():
 
 def data_generator(n):
     '''Generating artificial data.
-       n - Number of probabilities/ questions.
-       a - Vector of probabilities.
-       Return: data - An array with all the probabilities for selected qbits.'''
+       input: n - Number of probabilities/ questions.
+              a - Vector of probabilities.
+       output: data - An array with all the probabilities for selected qbits.'''
 
     data = np.empty([np.power(n,3), 6])
 

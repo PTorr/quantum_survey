@@ -12,7 +12,11 @@ def main():
 
 
 def reformat_data(table_path):
-    '''data = read_data(table_path)'''
+    '''data = read_data(table_path)
+       input: table_path - the full path of the csv file from the Qualtrics.
+       output: qid - vector of questions ID, for example: 'Q2'
+               q_value - vector of answers to question, for example: 0.20.
+               user_id - user ID from qualtrics'''
     data = pd.read_csv(table_path, header=None)
     dr = len(data)  # number of rows in the data
     dc = len(data.T)  # number of columns (participants) in the data

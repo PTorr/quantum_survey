@@ -1,12 +1,15 @@
 def main():
-    fpath = 'D:\Users\Torr\PycharmProjects\quantum_survey/test_data.xlsx'
+    # fpath = 'D:\Users\Torr\PycharmProjects\quantum_survey/test_data.xlsx'
     fpath1 = 'test_data.csv'
-    d = read_data(fpath)
+    d = read_data(fpath1)
     print d
 
 
 def read_data(file_path):
-    '''Reads the data from csv file and transform it into an array called data.'''
+    '''Reads the data from csv file and transform it into an array called data.
+    input: file_path - the full path of the csv file we want to read in format of
+            [qbit1, qbit2, p(qb1=1), p(qb2=1),p(qb1=1 & qb2 = 1), fallacy type]
+    output: array in the same format'''
     from xlrd import open_workbook
     import numpy as np
     import os
