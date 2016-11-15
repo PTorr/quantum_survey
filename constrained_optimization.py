@@ -79,6 +79,19 @@ def func2(x):
     +np.power(np.abs(x[0]*c[0]+x[2]*c[0])*np.abs(x[0]*c[0]+x[2]*c[0])+ np.abs(x[1]*c[1]+x[3]*c[1])*np.abs(x[1]*c[1]+x[3]*c[1])-1,2)\
     +np.power(np.abs(x[0]*d[0])*np.abs(x[0]*d[0])+np.abs((x[1]+x[2]+x[3])*d[1])*np.abs((x[1]+x[2]+x[3])*d[1])-1,2)
 
+def func3(x):
+    # x[0] = a, x[1] = b, x[2] = c, x[3] = d
+    # cp is coefficients array
+    p1 = [np.sqrt(1-cp[0]), np.sqrt(cp[0])]
+    p2 = [np.sqrt(1-cp[1]), np.sqrt(cp[1])]
+    p12 = [np.sqrt(1-cp[2]), np.sqrt(cp[2])]
+
+    # np.sum(np.multiply(np.abs(x), np.abs(x)))
+    return np.power(np.power(np.abs(x[0]),2)+np.power(np.abs(x[1]),2)-1,2)\
+    +np.power(np.power(np.abs(x[2]),2)+np.power(np.abs(x[3]),2)-1,2)\
+    +np.power(np.power(np.abs(x[0]*x[2]*p1[0]-x[1]*x[3]*p1[1]),2)+np.power(np.abs(x[1]*x[2]*p1[0]+x[0]*x[3]*p1[1]),2)-1,2)\
+    +np.power(np.power(np.abs(x[0]*x[2]*p2[0]+x[1]*x[2]*p2[1]),2)+np.power(np.abs(x[0]*x[3]*p2[1]-x[1]*x[3]*p2[0]),2)-1,2)
+
 
 # df/dx - if you know it, then add it
 # the analytical derivative of f
