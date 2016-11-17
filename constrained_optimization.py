@@ -21,6 +21,7 @@ def inp_value(cpv,fallacyv):
     fallacy = fallacyv
 
 def main(cpv,fallacyv):
+    import temp as tmp
     # this is the main function that minimizes
     # its takes:
     #       func1 is the name of a function that returns a single number (f(x))
@@ -30,12 +31,14 @@ def main(cpv,fallacyv):
     #       method='SLSQP' the optimizaiton method (don't change)
     #       options={} don't change
     inp_value(cpv,fallacyv)
-
     if fallacy == 1: # conjunction
         res = minimize(func1, init1(),  # jac=func1_deriv,
-                       constraints=cons1(), method='SLSQP', options={'disp': False})
+                       constraints=cons11(), method='SLSQP', options={'disp': False})
     elif fallacy == 2: # disjunction
         res = minimize(func2, init1(),  # jac=func1_deriv,
+                       constraints=cons1(), method='SLSQP', options={'disp': False})
+    elif fallacy == 4: # new conjunction
+        res = minimize(func4, init2(),  # jac=func1_deriv,
                        constraints=cons1(), method='SLSQP', options={'disp': False})
 
     # res has the following fields:
@@ -52,46 +55,45 @@ def main(cpv,fallacyv):
 def init1():
     x0=[0.5,0.5,0.5,0.5]
     return x0
+def init2():
+    x0=[0.5,0.5]
+    return x0
+
 
 # f(x) - the function to minimize-
 # receives a vector x
-def func1(x):
+def prob_value_update(cp):
     # cp is coefficients probability array
-    b = [np.sqrt(1-cp[0]), np.sqrt(cp[0])]
-    c = [np.sqrt(1-cp[1]), np.sqrt(cp[1])]
-    d = [np.sqrt(1-cp[2]), np.sqrt(cp[2])]
-
-    # np.sum(np.multiply(np.abs(x), np.abs(x)))
-    return np.power(np.sum(np.multiply(np.abs(x), np.abs(x))) - 1,2)\
-    +np.power(np.abs(x[0]*b[0]+x[1]*b[0])*np.abs(x[0]*b[0]+x[1]*b[0])+ np.abs(x[2]*b[1]+x[3]*b[1])*np.abs(x[2]*b[1]+x[3]*b[1])-1,2)\
-    +np.power(np.abs(x[0]*c[0]+x[2]*c[0])*np.abs(x[0]*c[0]+x[2]*c[0])+ np.abs(x[1]*c[1]+x[3]*c[1])*np.abs(x[1]*c[1]+x[3]*c[1])-1,2)\
-    +np.power(np.abs((x[0]+x[1]+x[2])*d[0])*np.abs((x[0]+x[1]+x[2])*d[0])+ np.abs(x[3]*d[1])*np.abs(x[3]*d[1])-1,2)
-
-def func2(x):
-    # cp is coefficients array
-    b = [np.sqrt(1-cp[0]), np.sqrt(cp[0])]
-    c = [np.sqrt(1-cp[1]), np.sqrt(cp[1])]
-    d = [np.sqrt(1-cp[2]), np.sqrt(cp[2])]
-
-    # np.sum(np.multiply(np.abs(x), np.abs(x)))
-    return np.power(np.sum(np.multiply(np.abs(x), np.abs(x))) - 1,2)\
-    +np.power(np.abs(x[0]*b[0]+x[1]*b[0])*np.abs(x[0]*b[0]+x[1]*b[0])+ np.abs(x[2]*b[1]+x[3]*b[1])*np.abs(x[2]*b[1]+x[3]*b[1])-1,2)\
-    +np.power(np.abs(x[0]*c[0]+x[2]*c[0])*np.abs(x[0]*c[0]+x[2]*c[0])+ np.abs(x[1]*c[1]+x[3]*c[1])*np.abs(x[1]*c[1]+x[3]*c[1])-1,2)\
-    +np.power(np.abs(x[0]*d[0])*np.abs(x[0]*d[0])+np.abs((x[1]+x[2]+x[3])*d[1])*np.abs((x[1]+x[2]+x[3])*d[1])-1,2)
+    b = [np.sqrt(1 - cp[0]), np.sqrt(cp[0])]
+    c = [np.sqrt(1 - cp[1]), np.sqrt(cp[1])]
+    d = [np.sqrt(1 - cp[2]), np.sqrt(cp[2])]
+    return b,c,d
 
 def func3(x):
-    # x[0] = a, x[1] = b, x[2] = c, x[3] = d
-    # cp is coefficients array
-    p1 = [np.sqrt(1-cp[0]), np.sqrt(cp[0])]
-    p2 = [np.sqrt(1-cp[1]), np.sqrt(cp[1])]
-    p12 = [np.sqrt(1-cp[2]), np.sqrt(cp[2])]
+    [b,c,d] = prob_value_update(cp)
 
-    # np.sum(np.multiply(np.abs(x), np.abs(x)))
-    return np.power(np.power(np.abs(x[0]),2)+np.power(np.abs(x[1]),2)-1,2)\
-    +np.power(np.power(np.abs(x[2]),2)+np.power(np.abs(x[3]),2)-1,2)\
-    +np.power(np.power(np.abs(x[0]*x[2]*p1[0]-x[1]*x[3]*p1[1]),2)+np.power(np.abs(x[1]*x[2]*p1[0]+x[0]*x[3]*p1[1]),2)-1,2)\
+    return np.power(np.power(np.abs(x[0]*b[0]+x[1]*b[0]),2)+np.power(np.abs(x[2]*b[1]+x[3]*b[1]),2)-1,2)\
+    +np.power(np.power(np.abs(x[0]*c[0]+x[2]*c[0]),2)+np.power(np.abs(x[1]*c[1]+x[3]*c[1]),2)-1,2)\
+    +np.power(np.power(np.abs((x[0]+x[1]+x[2])*d[0]),2)+ np.power(np.abs(x[3]*d[1]),2)-1,2)
+
+def func2(x):
+    [b, c, d] = prob_value_update(cp)
+
+    return np.power(np.power(np.abs(x[0]*b[0]+x[1]*b[0]),2)+np.power(np.abs(x[2]*b[1]+x[3]*b[1]),2)-1,2)\
+    +np.power(np.power(np.abs(x[0]*c[0]+x[2]*c[0]),2)+np.power(np.abs(x[1]*c[1]+x[3]*c[1]),2)-1,2)\
+    +np.power(np.power(np.abs(x[0]*d[0]),2)+np.power(np.abs((x[1]+x[2]+x[3]),2)*d[1])-1,2)
+
+def func1(x):
+    # x[0] = a, x[1] = b, x[2] = c, x[3] = d
+    [p1, p2, p12] = prob_value_update(cp)
+
+    return np.power(np.power(np.abs(x[0]*x[2]*p1[0]-x[1]*x[3]*p1[1]),2)+np.power(np.abs(x[1]*x[2]*p1[0]+x[0]*x[3]*p1[1]),2)-1,2)\
     +np.power(np.power(np.abs(x[0]*x[2]*p2[0]+x[1]*x[2]*p2[1]),2)+np.power(np.abs(x[0]*x[3]*p2[1]-x[1]*x[3]*p2[0]),2)-1,2)
 
+def func4(x):
+    [a,b,c,d]= cp
+    # x[0] = p12_0, x[1] = p12_1
+    return np.power((np.power(np.abs(x[1]*a*d),2)+np.power(np.abs(x[0]*(a*c+b*c-b*d)),2))-1,2)
 
 # df/dx - if you know it, then add it
 # the analytical derivative of f
@@ -104,12 +106,16 @@ def func1_deriv(x):
 # the format is:
 #       "lambda x: np.array" - don't change, keep it
 #       ([g_1(x), g(_2(x)])
+def cons11():
+    cons = [{'type': 'eq', 'fun': lambda x: np.array([np.power(np.abs(x[0]), 2) + np.power(np.abs(x[1]), 2) - 1])},
+            {'type': 'eq', 'fun': lambda x: np.array([np.power(np.abs(x[2]), 2) + np.power(np.abs(x[3]), 2) - 1])}]
+    return cons
 def cons1():
     cons = (#{'type': 'eq',
              #'fun' : lambda x: np.array([x[1]-2, 2*x[0] - x[1]])}, # g(x) = sum(x)-1
             {#'type': 'ineq',
              'type': 'eq',
-             'fun' : lambda x: np.array([np.sum(np.multiply(np.abs(x), np.abs(x)))-1])})
+             'fun': lambda x: np.array([np.sum(np.power(np.abs(x), 2))-1])})
     return cons
 
 

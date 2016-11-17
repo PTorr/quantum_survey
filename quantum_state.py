@@ -1,5 +1,5 @@
 import numpy as np
-from constraint_analysis import irrationality_checker as irr_check
+from constrained_analysis import irrationality_checker as irr_check
 
 
 def main():
@@ -52,7 +52,7 @@ def state_prob(qbit1, qbit2,d,d1):
     # print('|s> = %+.2f[%+.2f|00>%+.2f|11>]%+.2f[%+.2f|01>-(%+.2f)|10>]'% (a,c,d,b,c,d))
     # print('|s> = %+.2f|00>%+.2f|11>%+.2f|01>%+.2f|10>' % (ca[2],ca[5],ca[3],ca[4]))
 
-    from constraint_analysis import trace_out as trace_out
+    from constrained_analysis import trace_out as trace_out
     qa = np.ndarray((2,3), float)
     # qa[0, :] = ['qbit', 'a0', 'a1']
     qa[0, :] = [1, trace_out(1, 0, ca), trace_out(1, 1, ca)]

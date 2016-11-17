@@ -80,10 +80,19 @@ def coefficients_calculator(data):
         ca[i][1] = data[i, 1]  # qbit_02
         cp = data[i, 2:5]  # coefficients probability from the data (from survey).
         fallacy = data[i, 5]  # here enter irr calculator instead of the last column
-        # Check if the probabilities from the question are irrational
-        [irr, irr_value] = irrationality_checker(data[i, 2:6])
         # call the optimization function for the coefficients {a_ij}
         rx, rf = co(cp, fallacy)
+        if fallacy == 1:
+            pp, rf = co(rx, 4) # rx = [a,b,c,d], pp[p12_0,p12_1]
+            rx = [rx[0]*rx[2],rx[0]*rx[3],rx[1]*rx[2],rx[1]*rx[3]]
+        # Check if the probabilities from the question are irrational
+            p1 = data[i,2]
+            p2 = data[i,3]
+            [irr, irr_value] = irrationality_checker([p1,p2,pp[1],fallacy])
+            print ([p1,p2,pp[1],fallacy])
+            print rx
+        else:
+            [irr, irr_value] = irrationality_checker(data[i,2:6])
         ca[i][2:nc] = rx  # inserting the optimized coefficients into my my array
         ca[i][nc:nc + 2] = [irr, irr_value]
     # ca = np.matrix(ca)
