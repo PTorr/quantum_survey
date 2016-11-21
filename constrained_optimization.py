@@ -44,7 +44,7 @@ def main(cpv,fallacyv):
     # res has the following fields:
     # print(res.x) # the x at the solution
     # print(res.fun) # the minimum value of f
-    print res.x, cp
+    # print res.x, cp
     return res.x, res.fun
 
     # this just plots the resulting x (don't use it for your own code)
