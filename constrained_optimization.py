@@ -70,8 +70,8 @@ def func2(x,b,c,d):
 def func1(x,p1,p2):
     # x[0] = a, x[1] = b, x[2] = c, x[3] = d
     # return (0.5*x[1]-1)**2
-    return np.sum(np.power(np.power(np.abs(x[0]*x[2]*p1[0]-x[1]*x[3]*p1[1]),2)+np.power(np.abs(x[1]*x[2]*p1[0]+x[0]*x[3]*p1[1]),2)-1,2)\
-    +np.power(np.power(np.abs(x[0]*x[2]*p2[0]+x[1]*x[2]*p2[1]),2)+np.power(np.abs(x[0]*x[3]*p2[1]-x[1]*x[3]*p2[0]),2)-1,2))
+    return np.sum(np.power(np.power(np.abs(x[0]*x[2]*p1[0]-x[1]*x[3]*p1[1]),2)+np.power(np.abs(x[1]*x[2]*p1[0]+x[0]*x[3]*p1[1]),2)-1.0,2)\
+    +np.power(np.power(np.abs(x[0]*x[2]*p2[0]+x[1]*x[2]*p2[1]),2)+np.power(np.abs(x[0]*x[3]*p2[1]-x[1]*x[3]*p2[0]),2)-1.0,2))
 
 def func4(x,cp):
     [a,b,c,d]= cp
@@ -90,8 +90,8 @@ def func1_deriv(x):
 #       "lambda x: np.array" - don't change, keep it
 #       ([g_1(x), g(_2(x)])
 def cons11():
-    cons = [{'type': 'eq', 'fun': lambda x: np.array([np.power(np.abs(x[0]), 2) + np.power(np.abs(x[1]), 2) - 1])},
-            {'type': 'eq', 'fun': lambda x: np.array([np.power(np.abs(x[2]), 2) + np.power(np.abs(x[3]), 2) - 1])}]
+    cons = [{'type': 'eq', 'fun': lambda x: np.array([np.power(np.abs(x[0]), 2) + np.power(np.abs(x[1]), 2) - 1])}, # a^2+b^2=1
+            {'type': 'eq', 'fun': lambda x: np.array([np.power(np.abs(x[2]), 2) + np.power(np.abs(x[3]), 2) - 1])}] # c^2+d^2=1
     return cons
 
 def cons1():

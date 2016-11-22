@@ -30,7 +30,7 @@ def constraint_analysis(table_path):
             quit()
 
     data = read_data(table_path)
-    # data = dg(10)
+    # data = dg(30)
 
     # ------------------------------------------------------------------------------------------------------------
     # Compute the coefficients
@@ -90,7 +90,7 @@ def coefficients_calculator(data):
             p2 = data[i,3]
             [irr, irr_value] = irrationality_checker([p1,p2,pp[1],fallacy])
             print ([p1,p2,pp[1],fallacy])
-            print rx
+            # print rx
         else:
             [irr, irr_value] = irrationality_checker(data[i,2:6])
         ca[i][2:nc] = rx  # inserting the optimized coefficients into my my array
