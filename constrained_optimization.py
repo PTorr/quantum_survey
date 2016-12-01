@@ -10,6 +10,7 @@
 #-------------------------------------------------------------------------------
 import numpy as np
 from scipy.optimize import minimize
+import constrained_funcs as cf
 import matplotlib.pyplot as plt
 
 def main(cp,fallacy):
@@ -25,11 +26,11 @@ def main(cp,fallacy):
     # inp_value(cpv,fallacyv)
     [p1, p2, p12] = prob_value_update(cp)
     if fallacy == 1: # conjunction
-        res = minimize(func1, init1(), args=(p1,p2), constraints=cons11(), method='SLSQP', options={'disp': False})
+        res = minimize(cf.func1, init1(), args=(p1,p2), constraints=cf.cons11(), method='SLSQP', options={'disp': False})
     elif fallacy == 2: # disjunction
-        res = minimize(func2, init1(), args=(p1,p2,p12), constraints=cons1(), method='SLSQP', options={'disp': False})
+        res = minimize(cf.func2, init1(), args=(p1,p2,p12), constraints=cf.cons1(), method='SLSQP', options={'disp': False})
     elif fallacy == 4: # new conjunction
-        res = minimize(func4, init2(), args=(cp), constraints=cons1(), method='SLSQP', options={'disp': False})
+        res = minimize(cf.func4, init2(), args=(cp), constraints=cf.cons1(), method='SLSQP', options={'disp': False})
 
     # res has the following fields:
     # print(res.x) # the x at the solution
@@ -50,38 +51,10 @@ def init2():
 # receives a vector x
 def prob_value_update(cp):
     # cp is coefficients probability array
-    b = [np.sqrt(1 - cp[0]), np.sqrt(cp[0])]
-    c = [np.sqrt(1 - cp[1]), np.sqrt(cp[1])]
-    d = [np.sqrt(1 - cp[2]), np.sqrt(cp[2])]
+    b = [1 - cp[0], cp[0]]
+    c = [1 - cp[1], cp[1]]
+    d = [1 - cp[2], cp[2]]
     return b,c,d
-
-def func3(x,b,c,d):
-
-    return np.power(np.power(np.abs(x[0]*b[0]+x[1]*b[0]),2)+np.power(np.abs(x[2]*b[1]+x[3]*b[1]),2)-1,2)\
-    +np.power(np.power(np.abs(x[0]*c[0]+x[2]*c[0]),2)+np.power(np.abs(x[1]*c[1]+x[3]*c[1]),2)-1,2)\
-    +np.power(np.power(np.abs((x[0]+x[1]+x[2])*d[0]),2)+ np.power(np.abs(x[3]*d[1]),2)-1,2)
-
-def func2(x,b,c,d):
-
-    return np.power(np.power(np.abs(x[0]*b[0]+x[1]*b[0]),2)+np.power(np.abs(x[2]*b[1]+x[3]*b[1]),2)-1,2)\
-    +np.power(np.power(np.abs(x[0]*c[0]+x[2]*c[0]),2)+np.power(np.abs(x[1]*c[1]+x[3]*c[1]),2)-1,2)\
-    +np.power(np.power(np.abs(x[0]*d[0]),2)+np.power(np.abs((x[1]+x[2]+x[3]),2)*d[1])-1,2)
-
-def func1(x,p1,p2):
-    # x[0] = a, x[1] = b, x[2] = c, x[3] = d
-    # return (0.5*x[1]-1)**2
-    return np.sum(np.power(np.power(np.abs(x[0]*x[2]*p1[0]-x[1]*x[3]*p1[1]),2)+np.power(np.abs(x[1]*x[2]*p1[0]+x[0]*x[3]*p1[1]),2)-1.0,2)\
-    +np.power(np.power(np.abs(x[0]*x[2]*p2[0]+x[1]*x[2]*p2[1]),2)+np.power(np.abs(x[0]*x[3]*p2[1]-x[1]*x[3]*p2[0]),2)-1.0,2))
-
-def func4(x,cp):
-    [a,b,c,d]= cp
-    # x[0] = p12_0, x[1] = p12_1
-    return np.power((np.power(np.abs(x[1]*a*d),2)+np.power(np.abs(x[0]*(a*c+b*c-b*d)),2))-1,2)
-
-# df/dx - if you know it, then add it
-# the analytical derivative of f
-def func1_deriv(x):
-    return [x[1]+6*x[0], x[0] - 2]
 
 # constrinats
 # returns a dictionary with equality 'type':'eq' and inequality 'type':'ineq'
@@ -89,40 +62,7 @@ def func1_deriv(x):
 # the format is:
 #       "lambda x: np.array" - don't change, keep it
 #       ([g_1(x), g(_2(x)])
-def cons11():
-    cons = [{'type': 'eq', 'fun': lambda x: np.array([np.power(np.abs(x[0]), 2) + np.power(np.abs(x[1]), 2) - 1])}, # a^2+b^2=1
-            {'type': 'eq', 'fun': lambda x: np.array([np.power(np.abs(x[2]), 2) + np.power(np.abs(x[3]), 2) - 1])}] # c^2+d^2=1
-    return cons
 
-def cons1():
-    cons = (#{'type': 'eq',
-             #'fun' : lambda x: np.array([x[1]-2, 2*x[0] - x[1]])}, # g(x) = sum(x)-1
-            {#'type': 'ineq',
-             'type': 'eq',
-             'fun': lambda x: np.array([np.sum(np.power(np.abs(x), 2))-1])})
-    return cons
-
-
-def mean(x):
-    return sum(np.multiply(np.arange(len(x))+1,x))
-
-def cons2():
-    cons = ({'type': 'eq',
-             'fun' : lambda x: np.array([sum(x)-1,mean(x)-12])}, # g_1(x) = sum(x)-1, g_2(x) = mean(x)-12
-            {'type': 'ineq',
-             'fun' : lambda x: np.array(x)}) #g(x) : x>0
-    return cons
-
-def std(x):
-    mx = mean(x)
-    return sum( np.multiply(((np.arange(len(x))+1)-mx)**2,x))
-
-def cons3():
-    cons = ({'type': 'eq',
-             'fun' : lambda x: np.array([sum(x)-1,mean(x)-12,std(x)-10])}, # g_1(x) = sum(x)-1, g_2(x) = mean(x)-12, g_3(x)=std(x)-10
-            {'type': 'ineq',
-             'fun' : lambda x: np.array(x)}) #g(x) : x>0
-    return cons
 
 if __name__ == '__main__':
     main()
