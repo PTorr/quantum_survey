@@ -226,7 +226,7 @@ def irr_ent_plt(x, y, data):
     dx4 = dxx2[xx2 > 0]
     dz4 = dzz2[xx2 > 0]
 
-    plt.figure(11)
+    plt.figure(1)
     plt.plot(np.asarray(x1.T), np.asarray(y1.T), 'bo', label='irrational & not entangled')
     plt.plot(np.asarray(x2.T), np.asarray(y2.T), 'g*', label='irrational & entangled')
     plt.plot(np.asarray(x3.T), np.asarray(y3.T), 'md', label='rational & not entangled')
