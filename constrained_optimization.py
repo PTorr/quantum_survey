@@ -26,11 +26,11 @@ def main(cp,fallacy):
     # inp_value(cpv,fallacyv)
     [p1, p2, p12] = prob_value_update(cp)
     if fallacy == 1: # conjunction
-        res = minimize(cf.func1, init1(), args=(p1,p2), constraints=cf.cons11(), method='SLSQP', options={'disp': False})
+        res = minimize(cf.func_prob12, init1(), args=(p1,p2), constraints=cf.cons_prob12(), method='SLSQP', options={'disp': False})
     elif fallacy == 2: # disjunction
         res = minimize(cf.func2, init1(), args=(p1,p2,p12), constraints=cf.cons1(), method='SLSQP', options={'disp': False})
     elif fallacy == 4: # new conjunction
-        res = minimize(cf.func4, init2(), args=(cp), constraints=cf.cons1(), method='SLSQP', options={'disp': False})
+        res = minimize(cf.func_conjunction, init2(), args=(cp), constraints=cf.cons_conjunction(), method='SLSQP', options={'disp': False})
 
     # res has the following fields:
     # print(res.x) # the x at the solution
@@ -51,10 +51,10 @@ def init2():
 # receives a vector x
 def prob_value_update(cp):
     # cp is coefficients probability array
-    b = [1 - cp[0], cp[0]]
-    c = [1 - cp[1], cp[1]]
-    d = [1 - cp[2], cp[2]]
-    return b,c,d
+    p1 = [1 - cp[0], cp[0]]
+    p2 = [1 - cp[1], cp[1]]
+    p12 = [1 - cp[2], cp[2]]
+    return p1,p2,p12
 
 # constrinats
 # returns a dictionary with equality 'type':'eq' and inequality 'type':'ineq'

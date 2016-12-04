@@ -87,7 +87,7 @@ def coefficients_calculator(data):
         # call the optimization function for the coefficients {a_ij}
         rx, rf = co(cp, fallacy)
         if fallacy == 1:
-            pp, rf = co(rx, 4)  # rx = [a,b,c,d], pp[p12_0,p12_1]
+            pp, rf = co(rx, 4)  # rx = [a1,b1,a2,b2], pp[p12_0,p12_1]
             rx = [rx[0] * rx[2], rx[0] * rx[3], rx[1] * rx[2], rx[1] * rx[3]]
             # Check if the probabilities from the question are irrational
             p1 = data[i, 2]
@@ -95,7 +95,7 @@ def coefficients_calculator(data):
             p12 = data[i, 4]
             # [irr, irr_value] = irrationality_checker([p1,p2,pp[1],fallacy])
             [irr, irr_value] = irrationality_checker([p1, p2, p12, fallacy])
-            # print ([p1,p2,pp[1],fallacy])
+            print ([p1,p2,p12,pp[1],fallacy])
             # print rx
         else:
             [irr, irr_value] = irrationality_checker(data[i, 2:6])
